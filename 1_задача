@@ -1,0 +1,26 @@
+class Crop:
+  def __init__(self, name, area, yield_per_hectare):
+    self.name = name # Название культуры
+    self.area = area # Площадь посева в гектарах
+    self.yield_per_hectare = yield_per_hectare # Урожайность в тоннах на гектар
+  def total_yield(self):
+    """Метод для вычисления общего объема урожая."""
+    return self.area * self.yield_per_hectare
+def main():
+  crops = [] # Список для хранения культур
+  total_volume = 0 # Переменная для общего объема урожая
+  while True:
+    name = input("Введите название культуры (или 'стоп' для завершения): ")
+    if name.lower() == 'стоп':
+      break # Завершение ввода данных
+    area = float(input("Введите площадь посева (в гектарах): "))
+    yield_per_hectare = float(input("Введите урожайность (в тоннах на гектар):"))
+    crop = Crop(name, area, yield_per_hectare) # Создание объекта культуры
+    crops.append(crop) # Добавление культуры в список
+    total_volume += crop.total_yield() # Обновление общего объема урожая
+  print("\nУчет урожая:")
+  for crop in crops:
+    print(f"{crop.name}: {crop.total_yield()} тонн") # Вывод информации о каждой культуре
+  print(f"\nОбщий объем урожая за сезон: {total_volume} тонн") # Вывод общего объема урожая
+if __name__ == "__main__":
+  main()
