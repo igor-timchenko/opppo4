@@ -1,0 +1,36 @@
+class Book:
+  def __init__(self, title, author, genre, copies):
+    self.title = title # Название книги
+    self.author = author # Автор книги
+    self.genre = genre # Жанр книги
+    self.copies = copies # Количество экземпляров
+def main():
+  books = [] # Список для хранения книг
+  while True:
+    title = input("Введите название книги (или 'стоп' для завершения): ")
+    if title.lower() == 'стоп':
+      break # Завершение ввода данных
+    author = input("Введите автора книги: ")
+    genre = input("Введите жанр книги: ")
+    # Ввод количества экземпляров с проверкой на корректность
+    while True:
+      try:
+        copies = int(input("Введите количество экземпляров: "))
+        if copies < 0:
+          raise ValueError("Количество не может быть отрицательным.")
+        break
+      except ValueError as e:
+        print(f"Ошибка ввода: {e}. Пожалуйста, введите корректное количество.")
+    # Создание объекта Book и добавление его в список
+    book = Book(title, author, genre, copies)
+    books.append(book) # Добавление книги в список
+  # Вывод итоговой информации
+  print("\nИнформация о книгах в библиотеке:")
+  total_books_count = 0 # Переменная для общего количества книг
+  for book in books:
+    total_books_count += book.copies # Суммирование количества экземпляров
+    print(f"Название: '{book.title}'\n Автор: {book.author}\n Жанр: {book.genre}\n "
+          f"Количество экземпляров: {book.copies}")
+  print(f"\nОбщее количество книг в библиотеке: {total_books_count}") # Вывод общего количества книг
+if __name__ == "__main__":
+  main()
