@@ -4,43 +4,32 @@ class Crop:
         self.area = area  # Площадь посева в гектарах
         self.yield_per_hectare = yield_per_hectare  # Урожайность в тоннах на гектар
         self.total_yield = self.calculate_total_yield()  # Общий объем урожая
-
     def calculate_total_yield(self) -> float:
         """Расчет общего объема урожая."""
         return self.area * self.yield_per_hectare
-
     def __str__(self):
         return f"{self.name}: {self.area} га, Урожайность: {self.yield_per_hectare} т/га, Общий объем: {self.total_yield} т"
-
-
 class HarvestRecord:
     def __init__(self):
         self.crops = []
-
     def add_crop(self, crop: Crop):
         """Добавляет культуру в учет."""
         self.crops.append(crop)
-
     def total_harvest(self) -> float:
         """Возвращает общий объем урожая всех культур."""
         return sum(crop.total_yield for crop in self.crops)
-
     def display_records(self):
         """Выводит информацию о всех культурах."""
         print(f"\n{'Культура':<20}{'Площадь (га)':<15}{'Урожайность (т/га)':<20}{'Общий объем (т)':<15}")
         for crop in self.crops:
             print(f"{crop.name:<20}{crop.area:<15}{crop.yield_per_hectare:<20}{crop.total_yield:<15}")
-
-
 def main():
     harvest_record = HarvestRecord()
-
     while True:
         try:
             name = input("Введите название культуры (или 'exit' для выхода): ")
             if name.lower() == 'exit':
                 break
-
             while True:
                 try:
                     area = float(input("Введите площадь посева (в гектарах): "))
@@ -49,7 +38,6 @@ def main():
                     break  # Выход из внутреннего цикла при успешном вводе
                 except ValueError as e:
                     print(f"Ошибка ввода площади: {e}. Пожалуйста, попробуйте еще раз.")
-
             while True:
                 try:
                     yield_per_hectare = float(input("Введите урожайность (в тоннах на гектар): "))
@@ -58,20 +46,14 @@ def main():
                     break  # Выход из внутреннего цикла при успешном вводе
                 except ValueError as e:
                     print(f"Ошибка ввода урожайности: {e}. Пожалуйста, попробуйте еще раз.")
-
             crop = Crop(name, area, yield_per_hectare)
             harvest_record.add_crop(crop)
-
         except ValueError as e:
             print(f"Ошибка: {e}. Пожалуйста, попробуйте еще раз.")
-
     # Вывод итоговой информации о культурах
     harvest_record.display_records()
-    
     # Вывод общего объема урожая за сезон
     total_value = harvest_record.total_harvest()
     print(f"\nОбщий объем урожая за сезон: {total_value} тонн")
-
-
 if __name__ == "__main__":
     main()
