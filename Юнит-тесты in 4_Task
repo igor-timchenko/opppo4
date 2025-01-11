@@ -1,21 +1,16 @@
 import unittest
-
 class TestProduct(unittest.TestCase):
     def test_total_value(self):
         product = Product("Товар1", 10, 5.0)
         self.assertEqual(product.total_value(), 50.0)
-
 class TestWarehouse(unittest.TestCase):
     def test_add_product_and_total_value(self):
         warehouse = Warehouse()
         warehouse.add_product("Товар1", 10, 5.0)
-        warehouse.add_product("Товар2", 5, 10.0)
-        
+        warehouse.add_product("Товар2", 5, 10.0)    
         self.assertEqual(warehouse.total_inventory_value(), 100.0)
-
     def test_empty_warehouse_total_value(self):
         warehouse = Warehouse()
         self.assertEqual(warehouse.total_inventory_value(), 0.0)
-
 if __name__ == "__main__":
     unittest.main()
