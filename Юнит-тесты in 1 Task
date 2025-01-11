@@ -1,26 +1,28 @@
 import unittest
 
-class TestCrop(unittest.TestCase):
-    def test_total_yield(self):
-        """Тестирование расчета общего объема урожая для культуры."""
+class TestHarvestRecord(unittest.TestCase):
+
+    def setUp(self):
+        self.harvest_record = HarvestRecord()
+
+    def test_add_crop(self):
         crop = Crop("Пшеница", 10, 3)
-        self.assertEqual(crop.total_yield(), 30)
+        self.harvest_record.add_crop(crop)
+        self.assertEqual(len(self.harvest_record.crops), 1)
 
-class TestFarm(unittest.TestCase):
-    def test_total_yield_multiple_crops(self):
-        """Тестирование расчета общего объема урожая для нескольких культур."""
-        farm = Farm()
-        farm.add_crop(Crop("Пшеница", 10, 3))
-        farm.add_crop(Crop("Кукуруза", 5, 4))
-        self.assertEqual(farm.total_yield(), 50)
+    def test_total_harvest(self):
+        self.harvest_record.add_crop(Crop("Пшеница", 10, 3))
+        self.harvest_record.add_crop(Crop("Кукуруза", 5, 4))
+        self.assertEqual(self.harvest_record.total_harvest(), 50)  # 10*3 + 5*4 = 30 + 20 = 50
 
-    def test_negative_area(self):
-        """Тестирование обработки отрицательной площади."""
-        Crop("Пшеница", -10, 3)
-
-    def test_negative_yield_per_hectare(self):
-        """Тестирование обработки отрицательной урожайности."""
-        Crop("Пшеница", 10, -3)
+    def test_display_records(self):
+        self.harvest_record.add_crop(Crop("Пшеница", 10, 3))
+        self.harvest_record.add_crop(Crop("Кукуруза", 5, 4))
+        # Проверяем, что метод не вызывает ошибок
+        try:
+            self.harvest_record.display_records()
+        except Exception as e:
+            self.fail(f"display_records raised an exception: {e}")
 
 if __name__ == "__main__":
     unittest.main()
