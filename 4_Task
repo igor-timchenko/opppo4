@@ -3,24 +3,18 @@ class Product:
         self.name = name
         self.quantity = quantity
         self.unit_price = unit_price
-
     def total_value(self) -> float:
         return self.quantity * self.unit_price
-
-
 class Warehouse:
     def __init__(self):
         self.products = []
-
     def add_product(self, name: str, quantity: int, unit_price: float):
         if quantity < 0 or unit_price < 0:
             raise ValueError("Количество и цена не могут быть отрицательными.")
         product = Product(name, quantity, unit_price)
         self.products.append(product)
-
     def total_inventory_value(self) -> float:
         return sum(product.total_value() for product in self.products)
-
     def display_inventory(self):
         print(f"{'Наименование товара':<20} {'Количество':<10} {'Цена за единицу':<15} {'Общая стоимость':<15}")
         print("=" * 70)
@@ -28,11 +22,8 @@ class Warehouse:
             print(f"{product.name:<20} {product.quantity:<10} {product.unit_price:<15} {product.total_value():<15.2f}")
         print("=" * 70)
         print(f"Общая стоимость всех товаров на складе: {self.total_inventory_value():.2f} руб.")
-
-
 def main():
-    warehouse = Warehouse()
-    
+    warehouse = Warehouse() 
     while True:
         try:
             name = input("Введите наименование товара (или 'exit' для выхода): ")
@@ -46,8 +37,6 @@ def main():
         except Exception as e:
             print(f"Произошла ошибка: {e}. Завершение программы.")
             break
-
     warehouse.display_inventory()
-
 if __name__ == "__main__":
     main()
