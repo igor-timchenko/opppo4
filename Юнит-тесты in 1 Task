@@ -1,20 +1,15 @@
 import unittest
-
 class TestHarvestRecord(unittest.TestCase):
-
     def setUp(self):
         self.harvest_record = HarvestRecord()
-
     def test_add_crop(self):
         crop = Crop("Пшеница", 10, 3)
         self.harvest_record.add_crop(crop)
         self.assertEqual(len(self.harvest_record.crops), 1)
-
     def test_total_harvest(self):
         self.harvest_record.add_crop(Crop("Пшеница", 10, 3))
         self.harvest_record.add_crop(Crop("Кукуруза", 5, 4))
         self.assertEqual(self.harvest_record.total_harvest(), 50)  # 10*3 + 5*4 = 30 + 20 = 50
-
     def test_display_records(self):
         self.harvest_record.add_crop(Crop("Пшеница", 10, 3))
         self.harvest_record.add_crop(Crop("Кукуруза", 5, 4))
@@ -23,6 +18,5 @@ class TestHarvestRecord(unittest.TestCase):
             self.harvest_record.display_records()
         except Exception as e:
             self.fail(f"display_records raised an exception: {e}")
-
 if __name__ == "__main__":
     unittest.main()
