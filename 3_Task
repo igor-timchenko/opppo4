@@ -1,0 +1,29 @@
+class Animal:
+    def __init__(self, species: str, daily_feed: float, head_count: int):
+        self.species = species
+        self.daily_feed = daily_feed
+        self.head_count = head_count
+    def total_feed_needed(self, days: int) -> float:
+        if days < 0:
+            raise ValueError("Количество дней не может быть отрицательным.")
+        return self.daily_feed * self.head_count * days
+def main():
+    animals = []    
+    while True:
+        try:
+            species = input("Введите вид животного (или 'exit' для выхода): ")
+            if species.lower() == 'exit':
+                break         
+            daily_feed = float(input("Введите суточную норму корма на одну голову (в кг): "))
+            head_count = int(input("Введите количество голов: "))        
+            animal = Animal(species, daily_feed, head_count)
+            days = int(input("Введите количество дней для расчета потребности в кормах: "))
+            total_feed = animal.total_feed_needed(days) 
+            animals.append(animal)
+            print(f"Потребность в кормах для {species} за {days} дней: {total_feed} кг")
+        except ValueError as e:
+            print(f"Ошибка ввода: {e}")
+    overall_feed = sum(animal.total_feed_needed(days) for animal in animals)
+    print(f"Общая потребность в кормах за указанный период: {overall_feed} кг")
+if __name__ == "__main__":
+    main()
