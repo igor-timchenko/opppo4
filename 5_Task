@@ -1,36 +1,56 @@
 class Book:
-  def __init__(self, title, author, genre, copies):
-    self.title = title # Название книги
-    self.author = author # Автор книги
-    self.genre = genre # Жанр книги
-    self.copies = copies # Количество экземпляров
-def main():
-  books = [] # Список для хранения книг
-  while True:
-    title = input("Введите название книги (или 'стоп' для завершения): ")
-    if title.lower() == 'стоп':
-      break # Завершение ввода данных
-    author = input("Введите автора книги: ")
-    genre = input("Введите жанр книги: ")
-    # Ввод количества экземпляров с проверкой на корректность
-    while True:
-      try:
-        copies = int(input("Введите количество экземпляров: "))
+    def __init__(self, title: str, author: str, genre: str, copies: int):
+        self.title = title
+        self.author = author
+        self.genre = genre
+        self.copies = copies
+
+    def __str__(self):
+        return f"{self.title} by {self.author} ({self.genre}) - {self.copies} copies"
+
+
+class LibraryCatalog:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, title: str, author: str, genre: str, copies: int):
         if copies < 0:
-          raise ValueError("Количество не может быть отрицательным.")
-        break
-      except ValueError as e:
-        print(f"Ошибка ввода: {e}. Пожалуйста, введите корректное количество.")
-    # Создание объекта Book и добавление его в список
-    book = Book(title, author, genre, copies)
-    books.append(book) # Добавление книги в список
-  # Вывод итоговой информации
-  print("\nИнформация о книгах в библиотеке:")
-  total_books_count = 0 # Переменная для общего количества книг
-  for book in books:
-    total_books_count += book.copies # Суммирование количества экземпляров
-    print(f"Название: '{book.title}'\n Автор: {book.author}\n Жанр: {book.genre}\n "
-          f"Количество экземпляров: {book.copies}")
-  print(f"\nОбщее количество книг в библиотеке: {total_books_count}") # Вывод общего количества книг
+            raise ValueError("Количество экземпляров не может быть отрицательным.")
+        book = Book(title, author, genre, copies)
+        self.books.append(book)
+
+    def total_books(self) -> int:
+        return sum(book.copies for book in self.books)
+
+    def display_catalog(self):
+        print(f"{'Название':<30} {'Автор':<20} {'Жанр':<15} {'Экземпляры':<10}")
+        print("=" * 75)
+        for book in self.books:
+            print(f"{book.title:<30} {book.author:<20} {book.genre:<15} {book.copies:<10}")
+        print("=" * 75)
+        print(f"Общее количество книг в библиотеке: {self.total_books()}")
+
+
+def main():
+    library_catalog = LibraryCatalog()
+    
+    while True:
+        try:
+            title = input("Введите название книги (или 'exit' для выхода): ")
+            if title.lower() == 'exit':
+                break
+            author = input("Введите автора книги: ")
+            genre = input("Введите жанр книги: ")
+            copies = int(input("Введите количество экземпляров: "))
+            library_catalog.add_book(title, author, genre, copies)
+        except ValueError as e:
+            print(f"Ошибка ввода: {e}. Пожалуйста, попробуйте снова.")
+        except Exception as e:
+            print(f"Произошла ошибка: {e}. Завершение программы.")
+            break
+
+    library_catalog.display_catalog()
+
+
 if __name__ == "__main__":
-  main()
+    main()
