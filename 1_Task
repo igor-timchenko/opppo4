@@ -1,0 +1,47 @@
+class Crop:
+    """Класс для представления культуры."""    
+    def __init__(self, name: str, area: float, yield_per_hectare: float):
+        """
+        Инициализация культуры.   
+        :param name: Название культуры
+        :param area: Площадь посева в гектарах
+        :param yield_per_hectare: Урожайность в тоннах на гектар
+        """
+        self.name = name
+        self.area = area  # Площадь посева в гектарах
+        self.yield_per_hectare = yield_per_hectare  # Урожайность в тоннах на гектар
+    def total_yield(self) -> float:
+        """Расчет общего объема урожая для данной культуры."""
+        return self.area * self.yield_per_hectare
+class Farm:
+    """Класс для представления фермы."""
+    def __init__(self):
+        """Инициализация фермы с пустым списком культур."""
+        self.crops = []
+    def add_crop(self, crop: Crop):
+        """Добавление культуры на ферму.    
+        :param crop: Экземпляр класса Crop
+        """
+        self.crops.append(crop)
+    def total_yield(self) -> float:
+        """Расчет общего объема урожая всех культур на ферме."""
+        return sum(crop.total_yield() for crop in self.crops)
+def main():
+    """Основная функция для взаимодействия с пользователем."""
+    farm = Farm()
+    while True:
+        try:
+            name = input("Введите название культуры (или 'exit' для выхода): ")
+            if name.lower() == 'exit':
+                break 
+            area = float(input("Введите площадь посева (в гектарах): "))
+            yield_per_hectare = float(input("Введите урожайность (в тоннах на гектар): "))
+            if area < 0 or yield_per_hectare < 0:
+                raise ValueError("Площадь и урожайность должны быть неотрицательными числами.")
+            crop = Crop(name, area, yield_per_hectare)
+            farm.add_crop(crop) 
+        except ValueError as e:
+            print(f"Ошибка ввода: {e}. Пожалуйста, попробуйте снова.")
+    print(f"Общий объем урожая за сезон: {farm.total_yield()} тонн")
+if __name__ == "__main__":
+    main()
