@@ -1,1 +1,21 @@
+import unittest
 
+class TestAnimal(unittest.TestCase):
+    def test_calculate_total_gain(self):
+        animal = Animal("Коровы", 10, 1.5)
+        animal.calculate_total_gain(5)
+        self.assertEqual(animal.total_gain, 75)
+
+    def test_calculate_total_gain_negative_days(self):
+        animal = Animal("Коровы", 10, 1.5)
+        with self.assertRaises(ValueError):
+            animal.calculate_total_gain(-5)
+
+    def test_animal_initialization(self):
+        animal = Animal("Овцы", 20, 0.5)
+        self.assertEqual(animal.species, "Овцы")
+        self.assertEqual(animal.head_count, 20)
+        self.assertEqual(animal.daily_gain, 0.5)
+
+if __name__ == '__main__':
+    unittest.main()
