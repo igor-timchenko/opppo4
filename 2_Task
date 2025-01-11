@@ -1,0 +1,40 @@
+class Animal:
+    def __init__(self, species: str, head_count: int, daily_gain: float):
+        self.species = species
+        self.head_count = head_count
+        self.daily_gain = daily_gain
+        self.total_gain = 0
+
+    def calculate_total_gain(self, days: int):
+        if days < 0:
+            raise ValueError("Количество дней не может быть отрицательным.")
+        self.total_gain = self.head_count * self.daily_gain * days
+
+
+def main():
+    animals = []
+    
+    while True:
+        try:
+            species = input("Введите вид животного (или 'exit' для выхода): ")
+            if species.lower() == 'exit':
+                break
+            
+            head_count = int(input("Введите количество голов: "))
+            daily_gain = float(input("Введите среднесуточный привес (в кг): "))
+            
+            animal = Animal(species, head_count, daily_gain)
+            days = int(input("Введите количество дней для расчета прироста: "))
+            animal.calculate_total_gain(days)
+            
+            animals.append(animal)
+        
+        except ValueError as e:
+            print(f"Ошибка ввода: {e}")
+    
+    total_growth = sum(animal.total_gain for animal in animals)
+    print(f"Общий прирост поголовья за указанный период: {total_growth} кг")
+
+
+if __name__ == "__main__":
+    main()
