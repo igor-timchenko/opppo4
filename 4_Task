@@ -3,41 +3,51 @@ class Product:
         self.name = name
         self.quantity = quantity
         self.unit_price = unit_price
+
     def total_value(self) -> float:
-        """Возвращает общую стоимость товара на складе."""
         return self.quantity * self.unit_price
-class Inventory:
+
+
+class Warehouse:
     def __init__(self):
         self.products = []
-    def add_product(self, product: Product):
-        """Добавляет продукт в инвентарь."""
+
+    def add_product(self, name: str, quantity: int, unit_price: float):
+        if quantity < 0 or unit_price < 0:
+            raise ValueError("Количество и цена не могут быть отрицательными.")
+        product = Product(name, quantity, unit_price)
         self.products.append(product)
+
     def total_inventory_value(self) -> float:
-        """Возвращает общую стоимость всех товаров на складе."""
         return sum(product.total_value() for product in self.products)
+
     def display_inventory(self):
-        """Выводит информацию о товарах на складе."""
-        print(f"\n{'Наименование':<20}{'Количество':<15}{'Цена за единицу':<20}{'Общая стоимость':<20}")
+        print(f"{'Наименование товара':<20} {'Количество':<10} {'Цена за единицу':<15} {'Общая стоимость':<15}")
+        print("=" * 70)
         for product in self.products:
-            total_value = product.total_value()
-            print(f"{product.name:<20}{product.quantity:<15}{product.unit_price:<20}{total_value:<20}")
+            print(f"{product.name:<20} {product.quantity:<10} {product.unit_price:<15} {product.total_value():<15.2f}")
+        print("=" * 70)
+        print(f"Общая стоимость всех товаров на складе: {self.total_inventory_value():.2f} руб.")
+
+
 def main():
-    inventory = Inventory()
+    warehouse = Warehouse()
+    
     while True:
         try:
             name = input("Введите наименование товара (или 'exit' для выхода): ")
             if name.lower() == 'exit':
                 break
             quantity = int(input("Введите количество на складе: "))
-            unit_price = float(input("Введите цену за единицу: "))
-            product = Product(name, quantity, unit_price)
-            inventory.add_product(product)
+            unit_price = float(input("Введите цену за единицу товара: "))
+            warehouse.add_product(name, quantity, unit_price)
         except ValueError as e:
-            print(f"Ошибка ввода: {e}. Пожалуйста, попробуйте еще раз.")
-    # Вывод итоговой информации о товарах на складе
-    inventory.display_inventory()  
-    # Вывод общей стоимости всех товаров на складе
-    total_value = inventory.total_inventory_value()
-    print(f"\nОбщая стоимость всех товаров на складе: {total_value:.2f} руб.")
+            print(f"Ошибка ввода: {e}. Пожалуйста, попробуйте снова.")
+        except Exception as e:
+            print(f"Произошла ошибка: {e}. Завершение программы.")
+            break
+
+    warehouse.display_inventory()
+
 if __name__ == "__main__":
     main()
