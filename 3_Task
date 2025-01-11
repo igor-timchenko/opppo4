@@ -3,28 +3,21 @@ class Animal:
         self.species = species
         self.daily_feed_rate = daily_feed_rate
         self.head_count = head_count
-
     def total_feed_need(self, days: int) -> float:
         return self.head_count * self.daily_feed_rate * days
-
-
 class Farm:
     def __init__(self):
         self.animals = []
-
     def add_animal(self, species: str, daily_feed_rate: float, head_count: int):
         if daily_feed_rate < 0 or head_count < 0:
             raise ValueError("Суточная норма корма и количество голов не могут быть отрицательными.")
         animal = Animal(species, daily_feed_rate, head_count)
         self.animals.append(animal)
-
     def total_feed_need(self, days: int) -> float:
         if days < 0:
             raise ValueError("Количество дней не может быть отрицательным.")
         total = sum(animal.total_feed_need(days) for animal in self.animals)
         return total
-
-
 def main():
     farm = Farm()
     while True:
@@ -37,7 +30,6 @@ def main():
             farm.add_animal(species, daily_feed_rate, head_count)
         except ValueError as e:
             print(f"Ошибка ввода: {e}")
-
     while True:
         try:
             days = int(input("Введите количество дней для расчета потребности в кормах: "))
@@ -46,7 +38,5 @@ def main():
             break
         except ValueError as e:
             print(f"Ошибка ввода: {e}")
-
-
 if __name__ == "__main__":
     main()
