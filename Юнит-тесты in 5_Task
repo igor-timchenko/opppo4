@@ -1,1 +1,28 @@
+import unittest
 
+class TestLibraryCatalog(unittest.TestCase):
+
+    def setUp(self):
+        self.catalog = LibraryCatalog()
+
+    def test_add_book(self):
+        book = Book("1984", "George Orwell", "Dystopian", 5)
+        self.catalog.add_book(book)
+        self.assertEqual(len(self.catalog.books), 1)
+
+    def test_total_books(self):
+        self.catalog.add_book(Book("1984", "George Orwell", "Dystopian", 5))
+        self.catalog.add_book(Book("Brave New World", "Aldous Huxley", "Dystopian", 3))
+        self.assertEqual(self.catalog.total_books(), 8)
+
+    def test_display_catalog(self):
+        self.catalog.add_book(Book("1984", "George Orwell", "Dystopian", 5))
+        self.catalog.add_book(Book("Brave New World", "Aldous Huxley", "Dystopian", 3))
+        # Проверяем, что метод не вызывает ошибок
+        try:
+            self.catalog.display_catalog()
+        except Exception as e:
+            self.fail(f"display_catalog raised an exception: {e}")
+
+if __name__ == "__main__":
+    unittest.main()
