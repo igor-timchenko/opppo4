@@ -1,1 +1,14 @@
-
+import unittest
+class TestProduct(unittest.TestCase):
+    def test_total_value(self):
+        """Тестирование расчета общей стоимости товара."""
+        product = Product("Товар A", 10, 5.0)  # 10 единиц по цене 5.0
+        self.assertEqual(product.total_value(), 50.0)  # Ожидаемая стоимость: 10 * 5 = 50
+    def test_negative_quantity(self):
+        """Тестирование обработки отрицательного количества товара."""
+        Product("Товар B", -5, 10.0)  # Ожидаем выброс исключения
+    def test_negative_price(self):
+        """Тестирование обработки отрицательной цены за единицу товара."""
+        Product("Товар C", 10, -2.0)  # Ожидаем выброс исключения
+if __name__ == "__main__":
+    unittest.main()
