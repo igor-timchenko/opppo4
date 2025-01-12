@@ -1,1 +1,11 @@
-
+import unittest
+class TestBook(unittest.TestCase):
+    def test_total_copies(self):
+        """Тестирование правильности хранения общего количества экземпляров книги."""
+        book = Book("Тестовая книга", "Автор A", "Жанр A", 5)
+        self.assertEqual(book.total_copies, 5)  # Ожидаемое количество: 5
+    def test_negative_copies(self):
+        """Тестирование обработки отрицательного количества экземпляров."""
+        Book("Тестовая книга", "Автор B", "Жанр B", -1)  # Ожидаем выброс исключения
+if __name__ == "__main__":
+    unittest.main()
