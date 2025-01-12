@@ -1,1 +1,18 @@
-
+import unittest
+class TestAnimalFeed(unittest.TestCase):
+    def test_total_feed_needed(self):
+        """Тестирование расчета общей потребности в кормах."""
+        animal_feed = AnimalFeed("Коровы", 10.0, 5)  # 5 коров с нормой 10 кг
+        self.assertEqual(animal_feed.total_feed_needed(7), 350.0)  # Ожидаемая потребность: 10 * 5 * 7 = 350
+    def test_negative_daily_feed(self):
+        """Тестирование обработки отрицательной суточной нормы корма."""
+        AnimalFeed("Овцы", -5.0, 10)
+    def test_negative_total_heads(self):
+        """Тестирование обработки отрицательного общего поголовья."""
+        AnimalFeed("Свиньи", 3.0, -1)
+    def test_negative_days(self):
+        """Тестирование обработки отрицательного количества дней."""
+        animal_feed = AnimalFeed("Куры", 1.5, 20)
+        animal_feed.total_feed_needed(-10)
+if __name__ == "__main__":
+    unittest.main()
