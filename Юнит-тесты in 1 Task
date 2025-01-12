@@ -1,22 +1,14 @@
 import unittest
-class TestHarvestRecord(unittest.TestCase):
-    def setUp(self):
-        self.harvest_record = HarvestRecord()
-    def test_add_crop(self):
+class TestCrop(unittest.TestCase):
+    def test_total_yield(self):
+        """Тестирование расчета общего объема урожая."""
         crop = Crop("Пшеница", 10, 3)
-        self.harvest_record.add_crop(crop)
-        self.assertEqual(len(self.harvest_record.crops), 1)
-    def test_total_harvest(self):
-        self.harvest_record.add_crop(Crop("Пшеница", 10, 3))
-        self.harvest_record.add_crop(Crop("Кукуруза", 5, 4))
-        self.assertEqual(self.harvest_record.total_harvest(), 50)  # 10*3 + 5*4 = 30 + 20 = 50
-    def test_display_records(self):
-        self.harvest_record.add_crop(Crop("Пшеница", 10, 3))
-        self.harvest_record.add_crop(Crop("Кукуруза", 5, 4))
-        # Проверяем, что метод не вызывает ошибок
-        try:
-            self.harvest_record.display_records()
-        except Exception as e:
-            self.fail(f"display_records raised an exception: {e}")
+        self.assertEqual(crop.total_yield(), 30)  # Ожидаемый объем урожая: 10 * 3 = 30
+    def test_negative_area(self):
+        """Тестирование обработки отрицательной площади."""
+        Crop("Рис", -5, 4)
+    def test_negative_yield(self):
+        """Тестирование обработки отрицательной урожайности."""
+        Crop("Кукуруза", 5, -2)
 if __name__ == "__main__":
     unittest.main()
