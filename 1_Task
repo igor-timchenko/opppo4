@@ -1,59 +1,57 @@
 class Crop:
     def __init__(self, name: str, area: float, yield_per_hectare: float):
-        self.name = name
-        self.area = area  # Площадь посева в гектарах
-        self.yield_per_hectare = yield_per_hectare  # Урожайность в тоннах на гектар
-        self.total_yield = self.calculate_total_yield()  # Общий объем урожая
-    def calculate_total_yield(self) -> float:
-        """Расчет общего объема урожая."""
-        return self.area * self.yield_per_hectare
-    def __str__(self):
-        return f"{self.name}: {self.area} га, Урожайность: {self.yield_per_hectare} т/га, Общий объем: {self.total_yield} т"
-class HarvestRecord:
-    def __init__(self):
-        self.crops = []
-    def add_crop(self, crop: Crop):
-        """Добавляет культуру в учет."""
-        self.crops.append(crop)
-    def total_harvest(self) -> float:
-        """Возвращает общий объем урожая всех культур."""
-        return sum(crop.total_yield for crop in self.crops)
-    def display_records(self):
-        """Выводит информацию о всех культурах."""
-        print(f"\n{'Культура':<20}{'Площадь (га)':<15}{'Урожайность (т/га)':<20}{'Общий объем (т)':<15}")
-        for crop in self.crops:
-            print(f"{crop.name:<20}{crop.area:<15}{crop.yield_per_hectare:<20}{crop.total_yield:<15}")
+        """
+        Инициализация экземпляра класса Crop.
+
+        :param name: Название культуры.
+        :param area: Площадь посева (в гектарах).
+        :param yield_per_hectare: Урожайность (в тоннах на гектар).
+        """
+        self.name = name  # Название культуры
+        self.area = area  # Площадь посева
+        self.yield_per_hectare = yield_per_hectare  # Урожайность
+
+    def total_yield(self) -> float:
+        """
+        Расчет общего объема урожая.
+
+        :return: Общий объем урожая (в тоннах).
+        """
+        return self.area * self.yield_per_hectare  # Общий объем урожая
+
+
 def main():
-    harvest_record = HarvestRecord()
+    crops = []  # Список для хранения культур
+    
     while True:
         try:
+            # Ввод названия культуры
             name = input("Введите название культуры (или 'exit' для выхода): ")
             if name.lower() == 'exit':
-                break
-            while True:
-                try:
-                    area = float(input("Введите площадь посева (в гектарах): "))
-                    if area < 0:
-                        raise ValueError("Площадь не может быть отрицательной.")
-                    break  # Выход из внутреннего цикла при успешном вводе
-                except ValueError as e:
-                    print(f"Ошибка ввода площади: {e}. Пожалуйста, попробуйте еще раз.")
-            while True:
-                try:
-                    yield_per_hectare = float(input("Введите урожайность (в тоннах на гектар): "))
-                    if yield_per_hectare < 0:
-                        raise ValueError("Урожайность не может быть отрицательной.")
-                    break  # Выход из внутреннего цикла при успешном вводе
-                except ValueError as e:
-                    print(f"Ошибка ввода урожайности: {e}. Пожалуйста, попробуйте еще раз.")
+                break  # Выход из цикла при вводе 'exit'
+            
+            # Ввод площади посева
+            area = float(input("Введите площадь посева (в гектарах): "))
+            if area < 0:
+                raise ValueError("Площадь посева не может быть отрицательной.")
+            
+            # Ввод урожайности
+            yield_per_hectare = float(input("Введите урожайность (в тоннах на гектар): "))
+            if yield_per_hectare < 0:
+                raise ValueError("Урожайность не может быть отрицательной.")
+            
+            # Создание экземпляра Crop
             crop = Crop(name, area, yield_per_hectare)
-            harvest_record.add_crop(crop)
+            crops.append(crop)  # Добавление культуры в список
+            
         except ValueError as e:
-            print(f"Ошибка: {e}. Пожалуйста, попробуйте еще раз.")
-    # Вывод итоговой информации о культурах
-    harvest_record.display_records()
-    # Вывод общего объема урожая за сезон
-    total_value = harvest_record.total_harvest()
-    print(f"\nОбщий объем урожая за сезон: {total_value} тонн")
+            print(f"Ошибка ввода: {e}")  # Обработка ошибок ввода
+    
+    # Расчет общего объема урожая
+    total_volume = sum(crop.total_yield() for crop in crops)
+    print(f"Общий объем урожая за сезон: {total_volume} тонн")
+
+
+# Условие запуска программы
 if __name__ == "__main__":
     main()
