@@ -1,1 +1,65 @@
+class Book:
+    def __init__(self, title: str, author: str, genre: str, total_copies: int):
+        """
+        Инициализация экземпляра класса Book.
 
+        :param title: Название книги.
+        :param author: Автор книги.
+        :param genre: Жанр книги.
+        :param total_copies: Общее количество экземпляров книги.
+        """
+        self.title = title  # Название книги
+        self.author = author  # Автор книги
+        self.genre = genre  # Жанр книги
+        self.total_copies = total_copies  # Общее количество экземпляров книги
+
+    def __str__(self):
+        """
+        Строковое представление объекта Book.
+
+        :return: Информация о книге в виде строки.
+        """
+        return f"{self.title} by {self.author} ({self.genre}) - {self.total_copies} copies"
+
+
+def main():
+    library = []  # Список для хранения информации о книгах
+
+    while True:
+        try:
+            # Ввод названия книги
+            title = input("Введите название книги (или 'exit' для выхода): ")
+            if title.lower() == 'exit':
+                break  # Выход из цикла при вводе 'exit'
+            
+            # Ввод автора книги
+            author = input("Введите автора книги: ")
+            
+            # Ввод жанра книги
+            genre = input("Введите жанр книги: ")
+            
+            # Ввод общего количества экземпляров книги
+            total_copies = int(input("Введите общее количество экземпляров книги: "))
+            if total_copies < 0:
+                raise ValueError("Количество экземпляров не может быть отрицательным.")
+
+            # Создание экземпляра Book
+            book = Book(title, author, genre, total_copies)
+            library.append(book)  # Добавление информации о книге в список
+            
+        except ValueError as e:
+            print(f"Ошибка ввода: {e}")  # Обработка ошибок ввода
+
+    # Расчет общего количества всех книг в библиотеке
+    total_books = sum(book.total_copies for book in library)
+    
+    # Вывод итоговой информации о книгах
+    print("\nИтоговая информация о книгах в библиотеке:")
+    for book in library:
+        print(book)  # Вывод информации о каждой книге
+    print(f"\nОбщее количество книг в библиотеке: {total_books}")
+
+
+# Условие запуска программы
+if __name__ == "__main__":
+    main()
