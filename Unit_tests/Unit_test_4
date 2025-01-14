@@ -1,3 +1,4 @@
+# Пишем Юнит-тесты для 4 программы
 import unittest
 class TestProduct(unittest.TestCase):
     def test_total_value(self):
