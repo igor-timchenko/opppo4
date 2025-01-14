@@ -1,3 +1,4 @@
+# Пишем Юнит-тесты для 2 программы
 import unittest
 class TestAnimal(unittest.TestCase):
     def test_total_gain(self):
