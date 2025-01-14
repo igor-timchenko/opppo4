@@ -1,4 +1,4 @@
-# Пишем Юнит-тест для 1 программы
+# Пишем Юнит-тесты для 1 программы
 import unittest
 class TestCrop(unittest.TestCase):
     def test_total_yield(self):
